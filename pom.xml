@@ -64,6 +64,18 @@
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+    			<artifactId>spring-boot-starter-quartz</artifactId>
+		</dependency>
+		
+		<dependency>
+  			<!-- jsoup HTML parser library @ https://jsoup.org/ -->
+  			<groupId>org.jsoup</groupId>
+  			<artifactId>jsoup</artifactId>
+  			<version>1.13.1</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

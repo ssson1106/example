@@ -10,8 +10,7 @@ import com.example.api.repository.UserRepository;
 @SpringBootTest
 class ExampleApplicationTests {
 
-	@Autowired
-	UserRepository userRepository;
+	
 	
 	
 	@Test
