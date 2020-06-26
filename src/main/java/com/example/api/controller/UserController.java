@@ -20,11 +20,7 @@ public class UserController {
 	
 	@GetMapping("/users")
 	public List<User> users(){
-		User u1 = User.builder().name("name")
-				.password("password")
-				.userId("sjh")
-				.email("a@mail.com")
-				.build();
+		User u1 = new User("username", "password", "name", "e@mail.com", null);
 		
 		userRepository.save(u1);
 		return userRepository.findAll(); 

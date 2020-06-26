@@ -1,7 +1,5 @@
 package com.example.env.exception;
 
-import java.io.Serializable;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
