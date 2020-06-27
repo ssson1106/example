@@ -16,11 +16,18 @@ import javax.persistence.ManyToMany;
 import org.hibernate.annotations.NaturalId;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class User {
+public class User extends AuditngEntity{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
