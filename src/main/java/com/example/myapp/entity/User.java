@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import org.hibernate.annotations.NaturalId;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,6 +51,7 @@ public class User extends AuditngEntity{
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 	
+	@Builder
 	public User(String username, String password, String name, String email) {
 		this.username = username;
 		this.password = password;
