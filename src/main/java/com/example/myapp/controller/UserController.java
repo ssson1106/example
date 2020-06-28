@@ -28,7 +28,7 @@ public class UserController {
 	UserRepository userRepository;
 	
 	@GetMapping("/user/me")
-	@PreAuthorize("hasRole('USER")
+	@PreAuthorize("hasRole('USER')")
 	public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
 		UserSummary userSummary 
 			= UserSummary.builder()
