@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { signup, checkUsernameAvailability, checkEmailAvailability } from '../../util/APIUtils';
 import './Signup.css';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import { 
     NAME_MIN_LENGTH, NAME_MAX_LENGTH, 
     USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH,
@@ -9,12 +9,55 @@ import {
     PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH
 } from '../../constants';
 
-import { Form, Input, Button, notification } from 'antd';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
-const FormItem = Form.Item;
+function Copyright() {
+    return (
+        <Typography variant="body2" color="textSecondary" align="center">
+            {'Copyright © '}
+            <Link color="inherit" href="https://material-ui.com/">
+                Your Website
+        </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
+  
+
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(3),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
+const classes = useStyles();
 
 class Signup extends Component {
-
+    
     constructor(props){
         super(props);
         this.state = {
@@ -53,16 +96,10 @@ class Signup extends Component {
         };
         signup(signupRequest)
         .then(response => {
-            notification.success({
-                message: 'Polling App',
-                description: "Thank you! You're successfully registered. Please Login to continue!",
-            });          
+            alert("Thank you! You're successfully registered. Please Login to continue!");         
             this.props.history.push("/login");
         }).catch(error => {
-            notification.error({
-                message: 'Polling App',
-                description: error.message || 'Sorry! Something went wrong. Please try again!'
-            });
+            alert(error.message || 'Sorry! Something went wrong. Please try again!');
         });
     }
     isFormInvalid() {
@@ -76,86 +113,107 @@ class Signup extends Component {
     render(){
         
         return(
-            <div classNmae="signup-container">
-                <h1 className="page-title">Sign Up</h1>
-                <div className="signup-content">
-                    <Form onSubmit="" className="signup-form">
-                        <FormItem
-                            label="Full Name"
-                            validateStatus={this.state.name.validateStatus}
-                            help={this.state.name.errorMsg}>
-                            <Input
-                                size="large"
-                                name="name"
-                                autoCompleate="off"
-                                placeholder="Your full name"
-                                value={this.state.name.value} 
-                                onChange={event => this.handleInputChange(event, this.validateName)}
+            <Container component="main" maxWidth="xs">
+                <CssBaseline/>
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon/>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign up
+                    </Typography>
+                    <form className={classes.form}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    validateStatus={this.state.name.validateStatus}
+                                    label="Full Name"
+                                    helperText={this.state.name.errorMsg}
+                                    required
+                                    autoFocus
+                                    fullWidth
+                                    variant="outlined"
+                                    name="name"
+                                    autoComplete="given-name"
+                                    placeholder="Your full name"
+                                    value={this.state.name.value} 
+                                    onChange={event => this.handleInputChange(event, this.validateName)}
                                 />
-                        </FormItem>
-                        
-                        <FormItem   
-                            label="Username"
-                            hasFeedback
-                            validateStatus={this.state.username.validateStatus}
-                            help={this.state.username.errorMsg}>
-                            <Input
-                                size="large"
-                                name="username"
-                                autoCompleate="off"
-                                placeholder="A unique username"
-                                value={this.state.username.value} 
-                                onBlur={this.validateUsernameAvailability}
-                                onChange={event => this.handleInputChange(event, this.validateUsername)}
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    validateStatus={this.state.username.validateStatus}
+                                    label="Username"
+                                    helperText={this.state.username.errorMsg}
+                                    required
+                                    fullWidth
+                                    variant="outlined"
+                                    name="username"
+                                    autoComplete="off"
+                                    placeholder="A unique username"
+                                    value={this.state.username.value} 
+                                    onBlur={this.validateUsernameAvailability}
+                                    onChange={event => this.handleInputChange(event, this.validateUsername)}
                                 />
-                        </FormItem>
-
-                        <FormItem   
-                            label="Email"
-                            hasFeedback
-                            validateStatus={this.state.email.validateStatus}
-                            help={this.state.email.errorMsg}>
-                            <Input
-                                size="large"
-                                name="email"
-                                type="email"
-                                autoCompleate="off"
-                                placeholder="Your email"
-                                value={this.state.email.value} 
-                                onBlur={this.validateEmailAvailability}
-                                onChange={event => this.handleInputChange(event, this.validateEmail)}
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    validateStatus={this.state.email.validateStatus}
+                                    label="Email"
+                                    helperText={this.state.email.errorMsg}
+                                    required
+                                    autoFocus
+                                    fullWidth
+                                    variant="outlined"
+                                    name="email"
+                                    autoComplete="email"
+                                    placeholder="Your email"
+                                    value={this.state.email.value} 
+                                    onBlur={this.validateEmailAvailability}
+                                    onChange={event => this.handleInputChange(event, this.validateEmail)}
                                 />
-                        </FormItem>
-
-                        <FormItem   
-                            label="Password"
-                            validateStatus={this.state.password.validateStatus}
-                            help={this.state.password.errorMsg}>
-                            <Input
-                                size="large"
-                                name="password"
-                                type="password"
-                                autoCompleate="off"
-                                placeholder="A password between 6 to 20 characters"
-                                value={this.state.password.value} 
-                                onChange={event => this.handleInputChange(event, this.validatePassword)}
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    validateStatus={this.state.password.validateStatus}
+                                    label="Password"
+                                    helperText={this.state.password.errorMsg}
+                                    required
+                                    autoFocus
+                                    fullWidth
+                                    variant="outlined"
+                                    name="password"
+                                    autoComplete="current-password"
+                                    placeholder="A password between 6 to 20 characters"
+                                    value={this.state.email.value} 
+                                    onChange={event => this.handleInputChange(event, this.validatePassword)}
                                 />
-                        </FormItem>
-
-                        <FormItem>
-                            <Button type="primary"
-                                htmlType="submit"
-                                size="large"
-                                className="signup-form-button"
-                                disabled={this.isFormInvalid()}>Sign up</Button>
-                            Already registed? <Link to="/login">Login now!</Link>
-
-                        </FormItem>
-                    </Form>
-
-                    
+                            </Grid>
+                        </Grid>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            disabled={this.isFormInvalid()}
+                        >
+                            Sign Up
+                        </Button>
+                        <Grid container justify="flex-end">
+                            <Grid item>
+                            <Link href="/login" variant="body2">
+                                Already have an account? Sign in
+                            </Link>
+                            </Grid>
+                        </Grid>
+                    </form>
                 </div>
-            </div>
+                <Box mt={5}>
+                    <Copyright />
+                </Box>
+
+            </Container>
         );
     }
 
@@ -169,7 +227,7 @@ class Signup extends Component {
             }
         } else if (name.length > NAME_MAX_LENGTH) {
             return {
-                validationStatus: 'error',
+                validateStatus: 'error',
                 errorMsg: `Name is too long (Maximum ${NAME_MAX_LENGTH} characters allowed.)`
             }
         } else {
@@ -217,7 +275,7 @@ class Signup extends Component {
             }
         } else if (username.length > USERNAME_MAX_LENGTH) {
             return {
-                validationStatus: 'error',
+                validateStatus: 'error',
                 errorMsg: `Username is too long (Maximum ${USERNAME_MAX_LENGTH} characters allowed.)`
             }
         } else {
@@ -344,7 +402,7 @@ class Signup extends Component {
             }
         } else if (password.length > PASSWORD_MAX_LENGTH) {
             return {
-                validationStatus: 'error',
+                validateStatus: 'error',
                 errorMsg: `Password is too long (Maximum ${PASSWORD_MAX_LENGTH} characters allowed.)`
             }
         } else {
