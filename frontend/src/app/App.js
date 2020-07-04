@@ -76,14 +76,11 @@ class App extends Component {
     }
 
     render(){
-        if(this.state.isLoading){
-            
-        }
         return (
             <React.Fragment>
                 <CssBaseline />
                 <Container maxWidth="sm" className="app-container">
-                    <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} className="app-content">
+                    <Typography component="div" style={{ height: '100vh' }} className="app-content">
                         <Switch>
                             <Route path= "/signup" component={Signup}></Route>
                         </Switch>
