@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 
 import org.hibernate.annotations.NaturalId;
 
+import com.example.myapp.entity.audit.AuditngEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -29,10 +31,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 public class User extends AuditngEntity{
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 	
 	@Column(nullable = false, length = 20, unique=true)
 	private String username;

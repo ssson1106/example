@@ -15,7 +15,7 @@ public class ExampleApplication {
 	
 	@PostConstruct
 	void init() {
-		TimeZone.setDefault(TimeZone.getTimeZone("Seoul/Asia"));
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 	}
 	
 	public static void main(String[] args) {
