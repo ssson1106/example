@@ -55,3 +55,11 @@ export function checkEmailAvailability(email) {
         method: 'GET'
     });
 }
+
+export function login(loginRequest) {
+    return request({
+        url: API_BASE_URL + "/auth/signin",
+        method: 'POST',
+        body: JSON.stringify(loginRequest)
+    });
+}

@@ -6,6 +6,11 @@ import { getCurrentUser } from '../util/APIUtils';
 import { ACCESS_TOKEN } from '../constants';
 
 import Signup from '../user/signup/Signup';
+import Login from '../user/login/Login';
+import NotFound from '../common/NotFound';
+import Profile from '../user/profile/Profile';
+import AppHeader from '../common/AppHeader';
+import Test from '../test/Test';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -16,7 +21,7 @@ class App extends Component {
         super(props);
         this.state = {
             currentUser: null,
-            isAuthenicated: false,
+            isAuthenticated: false,
             isLoading: false
         }
         this.handleLogout = this.handleLogout.bind(this);
@@ -33,7 +38,7 @@ class App extends Component {
         .then(response => {
             this.setState({
                 currentUser: response,
-                isAuthenicated: true,
+                isAuthenticated: true,
                 isLoading: false
             });
         })
@@ -54,7 +59,7 @@ class App extends Component {
         
         this.setState({
             currentUser: null,
-            isAuthenicated: false
+            isAuthenticated: false
         });
 
         this.props.history.push(redirectTo);
@@ -80,9 +85,19 @@ class App extends Component {
             <React.Fragment>
                 <CssBaseline />
                 <Container maxWidth="sm" className="app-container">
+                    <AppHeader isAuthenticated={this.state.isAuthenticated} 
+                        currentUser={this.state.currentUser} 
+                        onLogout={this.handleLogout} />
                     <Typography component="div" style={{ height: '100vh' }} className="app-content">
                         <Switch>
+                            <Route exact path="/" 
+                            render={(props) => <Test isAuthenticated={this.state.isAuthenticated} 
+                                currentUser={this.state.currentUser} handleLogout={this.handleLogout} {...props} />}>
+                            </Route>
                             <Route path= "/signup" component={Signup}></Route>
+                            <Route path="/login" 
+                                render={(props) => <Login onLogin={this.handleLogin} {...props}/>}></Route>
+                            <Route component={NotFound}></Route>
                         </Switch>
                     </Typography>
                 </Container>
