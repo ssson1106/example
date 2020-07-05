@@ -66,10 +66,10 @@ class Signup extends Component {
         });
     }
     isFormInvalid() {
-        return !(this.state.name.validateStatus === 'success' &&
-            this.state.username.validateStatus === 'success' &&
-            this.state.email.validateStatus === 'success' &&
-            this.state.password.validateStatus === 'success'
+        return !(this.state.name.validatestatus === 'success' &&
+            this.state.username.validatestatus === 'success' &&
+            this.state.email.validatestatus === 'success' &&
+            this.state.password.validatestatus === 'success'
         );
     }
 
@@ -86,9 +86,10 @@ class Signup extends Component {
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField
-                                    validateStatus={this.state.name.validateStatus}
+                                    validatestatus={this.state.name.validatestatus}
                                     label="Full Name"
                                     helperText={this.state.name.errorMsg}
+                                    error={this.state.name.errorMsg != null ? true:false}
                                     required
                                     autoFocus
                                     fullWidth
@@ -102,8 +103,9 @@ class Signup extends Component {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    validateStatus={this.state.username.validateStatus}
+                                    validatestatus={this.state.username.validatestatus}
                                     label="Username"
+                                    error={this.state.username.errorMsg != null ? true:false}
                                     helperText={this.state.username.errorMsg}
                                     required
                                     fullWidth
@@ -118,8 +120,9 @@ class Signup extends Component {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    validateStatus={this.state.email.validateStatus}
+                                    validatestatus={this.state.email.validatestatus}
                                     label="Email"
+                                    error={this.state.email.errorMsg != null ? true:false}
                                     helperText={this.state.email.errorMsg}
                                     required
                                     fullWidth
@@ -134,8 +137,9 @@ class Signup extends Component {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    validateStatus={this.state.password.validateStatus}
+                                    validatestatus={this.state.password.validatestatus}
                                     label="Password"
+                                    error={this.state.password.errorMsg != null ? true:false}
                                     helperText={this.state.password.errorMsg}
                                     required
                                     fullWidth
@@ -182,17 +186,17 @@ class Signup extends Component {
     validateName = (name) => {
         if(name.length < NAME_MIN_LENGTH) {
             return {
-                validateStatus: 'error',
+                validatestatus: 'error',
                 errorMsg: `Name is too short (Minimum ${NAME_MIN_LENGTH} characters needed.)`
             }
         } else if (name.length > NAME_MAX_LENGTH) {
             return {
-                validateStatus: 'error',
+                validatestatus: 'error',
                 errorMsg: `Name is too long (Maximum ${NAME_MAX_LENGTH} characters allowed.)`
             }
         } else {
             return {
-                validateStatus: 'success',
+                validatestatus: 'success',
                 errorMsg: null,
               };            
         }
@@ -201,7 +205,7 @@ class Signup extends Component {
     validateEmail = (email) => {
         if(!email) {
             return {
-                validateStatus: 'error',
+                validatestatus: 'error',
                 errorMsg: 'Email may not be empty'                
             }
         }
@@ -209,20 +213,20 @@ class Signup extends Component {
         const EMAIL_REGEX = RegExp('[^@ ]+@[^@ ]+\\.[^@ ]+');
         if(!EMAIL_REGEX.test(email)) {
             return {
-                validateStatus: 'error',
+                validatestatus: 'error',
                 errorMsg: 'Email not valid'
             }
         }
 
         if(email.length > EMAIL_MAX_LENGTH) {
             return {
-                validateStatus: 'error',
+                validatestatus: 'error',
                 errorMsg: `Email is too long (Maximum ${EMAIL_MAX_LENGTH} characters allowed)`
             }
         }
 
         return {
-            validateStatus: null,
+            validatestatus: null,
             errorMsg: null
         }
     }
@@ -230,17 +234,17 @@ class Signup extends Component {
     validateUsername = (username) => {
         if(username.length < USERNAME_MIN_LENGTH) {
             return {
-                validateStatus: 'error',
+                validatestatus: 'error',
                 errorMsg: `Username is too short (Minimum ${USERNAME_MIN_LENGTH} characters needed.)`
             }
         } else if (username.length > USERNAME_MAX_LENGTH) {
             return {
-                validateStatus: 'error',
+                validatestatus: 'error',
                 errorMsg: `Username is too long (Maximum ${USERNAME_MAX_LENGTH} characters allowed.)`
             }
         } else {
             return {
-                validateStatus: null,
+                validatestatus: null,
                 errorMsg: null
             }
         }
@@ -251,7 +255,7 @@ class Signup extends Component {
         const usernameValue = this.state.username.value;
         const usernameValidation = this.validateUsername(usernameValue);
 
-        if(usernameValidation.validateStatus === 'error') {
+        if(usernameValidation.validatestatus === 'error') {
             this.setState({
                 username: {
                     value: usernameValue,
@@ -264,7 +268,7 @@ class Signup extends Component {
         this.setState({
             username: {
                 value: usernameValue,
-                validateStatus: 'validating',
+                validatestatus: 'validating',
                 errorMsg: null
             }
         });
@@ -275,7 +279,7 @@ class Signup extends Component {
                 this.setState({
                     username: {
                         value: usernameValue,
-                        validateStatus: 'success',
+                        validatestatus: 'success',
                         errorMsg: null
                     }
                 });
@@ -283,17 +287,17 @@ class Signup extends Component {
                 this.setState({
                     username: {
                         value: usernameValue,
-                        validateStatus: 'error',
+                        validatestatus: 'error',
                         errorMsg: 'This username is already taken'
                     }
                 });
             }
         }).catch(error => {
-            // Marking validateStatus as success, Form will be recchecked at server
+            // Marking validatestatus as success, Form will be recchecked at server
             this.setState({
                 username: {
                     value: usernameValue,
-                    validateStatus: 'success',
+                    validatestatus: 'success',
                     errorMsg: null
                 }
             });
@@ -305,7 +309,7 @@ class Signup extends Component {
         const emailValue = this.state.email.value;
         const emailValidation = this.validateEmail(emailValue);
 
-        if(emailValidation.validateStatus === 'error') {
+        if(emailValidation.validatestatus === 'error') {
             this.setState({
                 email: {
                     value: emailValue,
@@ -318,7 +322,7 @@ class Signup extends Component {
         this.setState({
             email: {
                 value: emailValue,
-                validateStatus: 'validating',
+                validatestatus: 'validating',
                 errorMsg: null
             }
         });
@@ -329,7 +333,7 @@ class Signup extends Component {
                 this.setState({
                     email: {
                         value: emailValue,
-                        validateStatus: 'success',
+                        validatestatus: 'success',
                         errorMsg: null
                     }
                 });
@@ -337,17 +341,17 @@ class Signup extends Component {
                 this.setState({
                     email: {
                         value: emailValue,
-                        validateStatus: 'error',
+                        validatestatus: 'error',
                         errorMsg: 'This Email is already registered'
                     }
                 });
             }
         }).catch(error => {
-            // Marking validateStatus as success, Form will be recchecked at server
+            // Marking validatestatus as success, Form will be recchecked at server
             this.setState({
                 email: {
                     value: emailValue,
-                    validateStatus: 'success',
+                    validatestatus: 'success',
                     errorMsg: null
                 }
             });
@@ -357,17 +361,17 @@ class Signup extends Component {
     validatePassword = (password) => {
         if(password.length < PASSWORD_MIN_LENGTH) {
             return {
-                validateStatus: 'error',
+                validatestatus: 'error',
                 errorMsg: `Password is too short (Minimum ${PASSWORD_MIN_LENGTH} characters needed.)`
             }
         } else if (password.length > PASSWORD_MAX_LENGTH) {
             return {
-                validateStatus: 'error',
+                validatestatus: 'error',
                 errorMsg: `Password is too long (Maximum ${PASSWORD_MAX_LENGTH} characters allowed.)`
             }
         } else {
             return {
-                validateStatus: 'success',
+                validatestatus: 'success',
                 errorMsg: null,
             };            
         }
