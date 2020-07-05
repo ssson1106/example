@@ -1,6 +1,5 @@
 package com.example.global.security;
 
-import java.util.Base64;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -24,19 +23,18 @@ public class JwtTokenProvider {
 	private String jwtSecret;
 	
 	@Value("${app.jwtExpirationInMs}")
-	private String jwtExpirationInMs;
+	private int jwtExpirationInMs;
 	
 	public String generateToken(Authentication authentication) {
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 		
 		Date now = new Date();
-		@SuppressWarnings("deprecation")
 		Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
 		
 		return Jwts.builder()
 				.setSubject(Long.toString(userPrincipal.getId()))
 				.setIssuedAt(expiryDate)
-				.signWith(SignatureAlgorithm.HS512, Base64.getEncoder().encode(jwtExpirationInMs.getBytes()).toString())
+				.signWith(SignatureAlgorithm.HS512, jwtSecret)
 				.compact();
 	}
 	

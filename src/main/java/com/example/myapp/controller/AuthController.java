@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +24,7 @@ import com.example.global.security.JwtTokenProvider;
 import com.example.myapp.dto.request.LoginRequest;
 import com.example.myapp.dto.request.SignUpRequest;
 import com.example.myapp.dto.response.ApiResponse;
+import com.example.myapp.dto.response.JwtAuthenticationResponse;
 import com.example.myapp.entity.Role;
 import com.example.myapp.entity.RoleName;
 import com.example.myapp.entity.User;
@@ -49,7 +53,15 @@ public class AuthController {
 	
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticationUser(@Valid @RequestBody LoginRequest loginRequest){
-		return null;
+		
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(loginRequest.getUsernameOrEmail()
+						, loginRequest.getPassword()));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		
+		String jwt = tokenProvider.generateToken(authentication);
+		
+		return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
 	}
 	
 	@PostMapping("/signup")
