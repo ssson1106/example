@@ -10,7 +10,6 @@ import Login from '../user/login/Login';
 import NotFound from '../common/NotFound';
 import Profile from '../user/profile/Profile';
 import AppHeader from '../common/AppHeader';
-import Test from '../test/Test';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -90,10 +89,10 @@ class App extends Component {
                         onLogout={this.handleLogout} />
                     <Typography component="div" style={{ height: '100vh' }} className="app-content">
                         <Switch>
-                            <Route exact path="/" 
+                            {/* <Route exact path="/" 
                             render={(props) => <Test isAuthenticated={this.state.isAuthenticated} 
                                 currentUser={this.state.currentUser} handleLogout={this.handleLogout} {...props} />}>
-                            </Route>
+                            </Route> */}
                             <Route path= "/signup" component={Signup}></Route>
                             <Route path="/login" 
                                 render={(props) => <Login onLogin={this.handleLogin} {...props}/>}></Route>
