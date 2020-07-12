@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useReducer } from 'react';
+import { login } from '../../../util/APIUtils'
+import { ACCESS_TOKEN } from '../../../constants';
+
 import { Link } from 'react-router-dom'
 import {
   CButton,
@@ -16,7 +19,43 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
-const Login = () => {
+function reducer(state, action) {
+  return {
+    ...state,
+    [action.name]: action.value
+  };
+}
+
+const Login = (props) => {
+  const [state, dispatch] = useReducer(reducer, {
+    usernameOrEmail: '',
+    password: ''
+  });
+  const { usernameOrEmail, password } = state;
+  const onChange = e => {
+    dispatch(e.target);
+  };
+
+  
+const handleSubmit = (e) => {
+  e.preventDefault();
+  
+  const loginRequest = Object.assign({}, state);
+
+  login(loginRequest)
+  .then(response => {
+      localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+      props.onLogin();
+  })
+  .catch(error => {
+      if(error.status === 401) {
+          alert('Your Username or Password is incorrect. Please try again!');
+      }else { 
+          alert('Sorry! Something went wrong. Please try again!');
+      }
+  });
+}
+
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
@@ -25,16 +64,24 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm>
+                  <CForm onSubmit={handleSubmit}>
                     <h1>Login</h1>
-                    <p className="text-muted">Sign In to your account</p>
+                    <p className="text-muted">Sign In to username or email.</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
                         <CInputGroupText>
                           <CIcon name="cil-user" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="text" placeholder="Username" autoComplete="username" />
+                      <CInput type="text" 
+                        placeholder="Username or Email" 
+                        autoComplete="email" 
+                        required
+                        autoFocus
+                        name="usernameOrEmail"
+                        value={usernameOrEmail}
+                        onChange={onChange}
+                        />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupPrepend>
@@ -42,11 +89,18 @@ const Login = () => {
                           <CIcon name="cil-lock-locked" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="password" placeholder="Password" autoComplete="current-password" />
+                      <CInput type="password"
+                        placeholder="Password" 
+                        autoComplete="current-password" 
+                        required
+                        name="password"
+                        value={password}
+                        onChange={onChange}
+                        />
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
-                        <CButton color="primary" className="px-4">Login</CButton>
+                        <CButton type="submit" color="primary" className="px-4">Login</CButton>
                       </CCol>
                       <CCol xs="6" className="text-right">
                         <CButton color="link" className="px-0">Forgot password?</CButton>

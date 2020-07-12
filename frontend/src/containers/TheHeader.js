@@ -14,7 +14,7 @@ import {
 import CIcon from '@coreui/icons-react'
 
 // routes config
-import routes from '../../../../../../../study/react/coreui/src/routes'
+import routes from '../routes'
 
 import { 
   TheHeaderDropdown,
