@@ -3,6 +3,6 @@
 INSERT INTO ROLE (NAME) VALUES ('ROLE_USER');
 INSERT INTO ROLE (NAME) VALUES ('ROLE_ADMIN');
 
-INSERT INTO USER (ID, CREATED_BY, CREATED_DATE, MODIFIED_BY, MODIFIED_DATE, EMAIL, NAME, PASSWORD, USERNAME ) VALUES (1, 'thswnsgjs', sysdate, '', sysdate, 'thswnsgjs@naver.com', '손준헌', '$2a$10$QFjeKqBauUskWa9Fx.7kS.ElViSkainNwm1T0kzC6ja0a0XkwzOT2', 'thswnsgjs');
+--INSERT INTO USER (CREATED_BY, CREATED_DATE, MODIFIED_BY, MODIFIED_DATE, EMAIL, NAME, PASSWORD, USERNAME ) VALUES (null, sysdate, null, sysdate, 'thswnsgjs@naver.com', '손준헌', '$2a$10$QFjeKqBauUskWa9Fx.7kS.ElViSkainNwm1T0kzC6ja0a0XkwzOT2', 'thswnsgjs');
 
-INSERT INTO USER_ROLES values (1,1); 
+--INSERT INTO USER_ROLES values (1,1); 
