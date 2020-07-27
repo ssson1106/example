@@ -29,7 +29,7 @@ const Register = (props) => {
     });
 
     useEffect(()=>{
-      console.log("useEffect", inputs);
+      //console.log("useEffect", inputs);
     });
 
     const handleInputChange = (e, validationFun) => {
@@ -62,7 +62,6 @@ const Register = (props) => {
     };
 
     const isFormInvalid = () => {
-      console.log("isFormInvalid", inputs);
         return !(
           inputs.name.validatestatus === 'success' &&
           inputs.username.validatestatus === 'success' &&
